@@ -25,6 +25,7 @@ const getUserWithEmail = function (email) {
     })
     .catch((error) => {
       console.log(error.message);
+      throw error;
     });
 };
 
@@ -41,6 +42,7 @@ const getUserWithId = function (id) {
     })
     .catch((error) => {
       console.log(error.message);
+      throw error;
     });
 };
 
@@ -62,6 +64,7 @@ const addUser = function (user) {
     })
     .catch((error) => {
       console.log(error.message);
+      throw error;
     })
 };
 
@@ -111,8 +114,9 @@ const getAllProperties = function (options, limit = 3) {
     .then((result) => { //.then always returns a promise
       return result.rows;// return? It has to do with where getAllProperties is being used elsewhere in the project. When getAllProperties is called in the apiRoutes.js file, it is chained to .then, which can only consume a promise.
     })
-    .catch((err) => {
-      console.log(err.message);
+    .catch((error) => {
+      console.log(error.message);
+      throw error;
     });
 };
 
