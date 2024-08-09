@@ -8,4 +8,3 @@ SELECT reservations.id, properties.title, properties.cost_per_night, reservation
   GROUP BY properties.id, reservations.id
   ORDER BY reservations.start_date
   LIMIT 10;
-
