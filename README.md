@@ -38,7 +38,7 @@ cd LightBnB_WebApp
 ```
 npm i
 ```
-5. Start database with `startpostgres` command
+5. Start database with `startpostgres` command on your command line. I suggest open a separate terminal for this, do steps #2 and #3 before running the database.
 6. Run the development web server using `npm run local`
 7. Open your browser. The app will be served at [localhost: 3000](http://localhost:3000/)
 
