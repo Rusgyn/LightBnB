@@ -157,13 +157,13 @@ const getAllProperties = function (options, limit = 10) {
 
   //Add any query that comers after WHERE but before HAVING
   queryString += `
-  GROUP BY properties.id, property_reviews.rating`;
+  GROUP BY properties.id`;
 
   //Filter based on rating
   if (options.minimum_rating) {
     queryParams.push(options.minimum_rating);
 
-    queryString.includes('HAVING') ? queryString += ` AND rating >= $${queryParams.length}` : queryString += ` HAVING rating >= $${queryParams.length}`;
+    queryString.includes('HAVING') ? queryString += ` AND rating >= $${queryParams.length}` : queryString += ` HAVING avg(property_reviews.rating) >= $${queryParams.length}`;
   }
 
   queryParams.push(limit);
