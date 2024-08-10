@@ -3,6 +3,7 @@ const users = require("./json/users.json");
 
 const { Pool } = require("pg");
 
+//Database. Connecting to database using node postgres
 const pool = new Pool({
   user: "development",
   password: "development",
@@ -54,10 +55,11 @@ const getUserWithId = function(id) {
 const addUser = function(user) {
   const queryString = `INSERT INTO users (name, email, password)
     VALUES ($1, $2, $3)
-    RETURNING *;`; //add RETURNING *; to the end of the query to return the saved property.
+    RETURNING *;`; //add 'RETURNING *;' to the end of the query to return the saved property.
 
   const values = [user.name, user.email, user.password];
 
+  //Run the query
   return pool
     .query(queryString, values)
     .then((response)=> {
@@ -77,7 +79,6 @@ const addUser = function(user) {
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function(guest_id, limit = 10) {
-  // return getAllProperties(null, 2);
   
   const queryString = `SELECT properties.*, reservations.*, avg(rating) as average_rating
     FROM reservations
@@ -91,6 +92,7 @@ const getAllReservations = function(guest_id, limit = 10) {
 
   const values = [guest_id, limit];
 
+  //Run the query
   return pool
     .query(queryString, values)
     .then((response) => {
@@ -153,7 +155,7 @@ const getAllProperties = function(options, limit = 10) {
 
   }
 
-  //Add any query that comers after WHERE but before HAVING
+  //Add any query that comes after 'WHERE' clause but before 'HAVING' clause
   queryString += `
   GROUP BY properties.id`;
 
@@ -166,16 +168,16 @@ const getAllProperties = function(options, limit = 10) {
 
   queryParams.push(limit);
 
-  //Add any query that comers after HAVING
+  //Add any query that comes after 'HAVING' clause
   queryString += `
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};
   `;
 
-  // Console log everything just to make sure we've done it right.
+  //Console log everything just to make sure we've done it right.
   console.log(queryString, queryParams);
 
-  // Run the query
+  //Run the query
   return pool
     .query(queryString, queryParams)
     .then((res) => res.rows)
@@ -193,7 +195,7 @@ const getAllProperties = function(options, limit = 10) {
  */
 const addProperty = function(property) {
   const queryString = `INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, street, city, province, post_code, country, parking_spaces, number_of_bathrooms, number_of_bedrooms)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`; //add RETURNING *; to the end of the query to return the saved property.
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`; //add 'RETURNING *;' to the end of the query to return the saved property.
 
   const values = [property.owner_id,
     property.title,
@@ -210,6 +212,7 @@ const addProperty = function(property) {
     property.number_of_bathrooms,
     property.number_of_bedrooms];
 
+  //Run the query
   return pool
     .query(queryString, values)
     .then((response) => {
